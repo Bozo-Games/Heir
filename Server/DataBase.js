@@ -40,7 +40,7 @@ var db = {
         db._ref.kingdoms.on("value", db.gotKingdomData, db.errData);
 
         db._ref.titles = db._database.ref('Titles');
-        db._ref.titles.on("value", db.gotTileData, db.errData);
+        db._ref.titles.on("value", db.gotTitleData, db.errData);
 
         db._ref.quests = db._database.ref('Quests');
         db._ref.quests.on("value", db.gotQuestData, db.errData);

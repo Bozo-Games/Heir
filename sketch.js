@@ -12,17 +12,17 @@ function preload() {
     assests.character['default'] = loadImage('Assets/Characters/blank-character.png');
 }
 function setup() {
-    FC.loadFirebase();
+    db.loadFirebase();
     //Intalize Models
 
     // Create the GUI
 
     createCanvas(windowWidth, windowHeight);
-
+/*
     var factionCreate = new createFactionView();
     allViews.push(factionCreate);
     topFactionsView = new factionsView();
-    allViews.push(topFactionsView);
+    allViews.push(topFactionsView);*/
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);

@@ -7,9 +7,9 @@ var factionColorOptions = {
     purple:'#ff00ff',
     //noColor:'#666666'
 };
-function Faction() {
-    this.udid = null;
-    this.name = 'No Name';
+function Faction(json) {
+    this.udid = json.id;
+    this.name = json.name;
     this.colorIndex = null;//factionColorOptions.noColor;
 
     this.leader = null;

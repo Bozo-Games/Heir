@@ -1,5 +1,3 @@
-
-var database;
 var allViews = [];
 var topFactionsView;
 

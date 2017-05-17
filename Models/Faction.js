@@ -9,11 +9,15 @@ var factionColorOptions = {
 };
 function Faction(json) {
     this.udid = json.id;
+    if(this.udid == undefined) {
+        this.udid = null;
+    }
     this.name = json.name;
-    this.colorIndex = null;//factionColorOptions.noColor;
+    this.colorIndex = json.colorIndex;//factionColorOptions.noColor;
 
     this.leader = null;
     this.heir = null;
+    this.champion = null;
 
     this.characters = [];
 

@@ -1,5 +1,5 @@
 
-function Character() {
+function Character(json) {
     this.udid = null;
     this.name = 'No Name';
     this.factionLoyalty = null;
@@ -11,11 +11,11 @@ Character.prototype.loadJSON = function(json) {
     this.name = json.name;
     this.factionLoyalty = json.factionLoyalty;
 
-}
+};
 Character.prototype.buildJSON = function (){
     return {
         id:this.udid,
         name:this.name,
         factionLoyalty: this.factionLoyalty
     }
-}
+};

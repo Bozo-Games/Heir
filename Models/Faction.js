@@ -1,41 +1,47 @@
-var factionColorOptions = {
-    red:'#ff0000',
-    green:'#00ff00',
-    blue:'#0000ff',
-    yellow:'#ffff00',
-    cyan:'#00ffff',
-    purple:'#ff00ff',
-    //noColor:'#666666'
-};
 function Faction(json) {
-    this.udid = json.id;
-    if(this.udid == undefined) {
-        this.udid = null;
-    }
+    this.udid = null;
     this.name = json.name;
-    this.colorIndex = json.colorIndex;//factionColorOptions.noColor;
 
+    this.color = '#FF0000';
     this.leader = null;
     this.heir = null;
     this.champion = null;
 
-    this.characters = [];
+    this.prestige = 0;
 
-    this.resourses = {
-        money:0,
-        manpower:0,
-        tools:0
+    var resouceKeys = allResourceTypes();
+    this.resourses = {};
+    for (var i = 0; i < resouceKeys.length; i++ ) {
+        var key = resouceKeys[i];
+        this.resourses[key] = 0;
     }
+    this.loadJSON(json);
 }
 Faction.prototype.loadJSON  = function (json) {
-    this.udid = json.id;
-    this.name = json.name;
-    this.colorIndex = json.colorIndex;
+    if(json != undefined) {
+        this.udid = (json.id == undefined) ? null : json.id;
+        this.name = json.name;
+        this.colorIndex = json.colorIndex;
+    }
 };
 Faction.prototype.buildJSON = function (){
     return {
         id:this.udid,
-        name:this.name,
-        colorIndex:this.colorIndex
+        name:this.name
     }
+};
+Faction.prototype.draw = function(x,y) {
+    push();
+    fill(color(255,255,255));
+    stroke(this.color);
+    strokeWeight(2);
+    rect(x,y,100,100,5);
+    var resouceKeys = allResourceTypes();
+    noStroke();
+    for (var i = 0; i < resouceKeys.length; i++ ) {
+        var key = resouceKeys[i];
+        fill(COLOR.resources[key]);
+        rect(x+4,y+96 - (i+1)*5,50 * (this.resourses[key] / SETTINGS.resources.max),5);
+    }
+    pop();
 };

@@ -3,25 +3,28 @@ var topFactionsView;
 
 var myFaction;
 var myKindom;
-var text;
+var txt;
 var assests = {
     character: {}
 }
 function preload() {
     //Character Images
     assests.character['default'] = loadImage('Assets/Characters/blank-character.png');
+
+    db.loadFirebase();
+    db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
 }
 function setup() {
-    db.loadFirebase();
     //Intalize Models
 
     //Canvas is Zero Layer GUIs float above
     createCanvas(windowWidth, windowHeight);
     // Create the GUI (dom elements)
-    text = createDiv('This is an HTML string!');
-    text.position(50, 50);
+    txt = createDiv('This is an HTML string!');
+    txt.position(50, 50);
     var col = color(255,255,255,255);
-    text.style("background-color", col);
+    txt.style("background-color", col);
+    //loadColors();
 
 /*
     var factionCreate = new createFactionView();
@@ -35,9 +38,11 @@ function windowResized() {
 function draw() {
 
     background(0);
-
-    for (var i = allViews.length-1; i >= 0; i--) {
-        allViews[i].draw();
+    var x = 50;
+    var factionKeys = Object.keys(db.factions) ;
+    for (var i = factionKeys.length-1; i >= 0; i--) {
+        db.factions[factionKeys[i]].draw(x,50);
+        x += 110;
     }
     //currentView.draw();
 }
@@ -58,7 +63,7 @@ function keyReleased() {
 }
 
 function mouseClicked() {
-    text.position(mouseX,mouseY);
+    txt.position(mouseX,mouseY);
     for (var i = 0; i < allViews.length; i++ ) {
         allViews[i].mouseClicked();
     }

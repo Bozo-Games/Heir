@@ -13,7 +13,7 @@ function Faction(json) {
     this.resourses = {};
     for (var i = 0; i < resouceKeys.length; i++ ) {
         var key = resouceKeys[i];
-        this.resourses[key] = 0;
+        this.resourses[key] = 0+10*i+10;
     }
     this.loadJSON(json);
 }

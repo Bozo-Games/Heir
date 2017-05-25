@@ -10,6 +10,7 @@ var assests = {
 function preload() {
     //Character Images
     assests.character['default'] = loadImage('Assets/Characters/blank-character.png');
+    //assests.character['army'] = loadImage('Assets/Characters/army_organiser.dds');
 
     db.loadFirebase();
     db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
@@ -43,6 +44,12 @@ function draw() {
     for (var i = factionKeys.length-1; i >= 0; i--) {
         db.factions[factionKeys[i]].draw(x,50);
         x += 110;
+    }
+    var y = 250;
+    var characterKeys = Object.keys(db.characters);
+    for (var i = characterKeys.length-1; i >= 0; i--) {
+        db.characters[characterKeys[i]].draw(75,y);
+        y += 110;
     }
     //currentView.draw();
 }

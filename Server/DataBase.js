@@ -63,6 +63,11 @@ var db = {
         db.createFaction(new Faction({name:"Test A"}));
         db.createFaction(new Faction({name:"Test B"}));
         db.createFaction(new Faction({name:"Test C"}));
+
+        db.createCharacter(new Character({name:'Bob'}));
+        db.createCharacter(new Character({name:'Frank'}));
+        db.createCharacter(new Character({name:'Clare'}));
+        db.createCharacter(new Character({name:'Jill'}));
     },
     //Faction CRUD
     createFaction: function(newFaction) {

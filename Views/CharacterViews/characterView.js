@@ -1,7 +1,7 @@
 function characterView() {
     View.call(this);
     this.setWindow(0,0,0.05,0.5);
-    this.img = assests.character.default;
+    this.img = assets.character.default;
     this.character = null;
 }
 characterView.prototype = Object.create(View.prototype);

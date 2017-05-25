@@ -24,7 +24,7 @@ Character.prototype.buildJSON = function (){
     return {
         id:this.udid,
         name:this.name
-    }
+    };
 };
 Character.prototype.draw = function(x,y) {
     push();
@@ -37,6 +37,6 @@ Character.prototype.draw = function(x,y) {
     }
     ellipse(x,y,100,100);
     imageMode(CENTER);
-    image(assests.character[this.img],x,y,50,50);
+    image(assets.character[this.img],x,y,90,90);
     pop();
 };

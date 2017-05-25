@@ -4,14 +4,11 @@ var topFactionsView;
 var myFaction;
 var myKindom;
 var txt;
-var assests = {
+var assets = {
     character: {}
 }
 function preload() {
-    //Character Images
-    assests.character['default'] = loadImage('Assets/Characters/blank-character.png');
-    //assests.character['army'] = loadImage('Assets/Characters/army_organiser.dds');
-
+    preloadAssets();
     db.loadFirebase();
     db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
 }

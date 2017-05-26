@@ -1,16 +1,21 @@
 var allViews = [];
 var topFactionsView;
-
+var userIPAddress;
 var myFaction;
 var myKindom;
 var txt;
 var assets = {
     character: {}
-}
+};
+var debug; //used as global in console to handle bugs
+
+var logInView;
 function preload() {
     preloadAssets();
     db.loadFirebase();
-    db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
+    //db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
+
+    getUserIP(function(newIP) {userIPAddress = newIP;});
 }
 function setup() {
     //Intalize Models
@@ -18,20 +23,13 @@ function setup() {
     //Canvas is Zero Layer GUIs float above
     createCanvas(windowWidth, windowHeight);
     // Create the GUI (dom elements)
-    txt = createDiv('This is an HTML string!');
-    txt.position(50, 50);
-    var col = color(255,255,255,255);
-    txt.style("background-color", col);
-    //loadColors();
-
-/*
-    var factionCreate = new createFactionView();
-    allViews.push(factionCreate);
-    topFactionsView = new factionsView();
-    allViews.push(topFactionsView);*/
+    logInView = new LogInView();
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    if(logInView) {
+        logInView.resizeWindow();
+    }
 }
 function draw() {
 

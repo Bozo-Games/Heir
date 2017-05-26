@@ -16,6 +16,36 @@ var db = {
     titles: {},
     quests: {},
     laws: {},
+    //These are how the rest of the app gets notified
+    notifications: {
+        factions: [],
+        characters: [],
+        kingdoms: [],
+        titles: [],
+        quests: [],
+        laws: []
+    },
+    addListener: function(tableName,listener) {
+        if (db.notifications[tableName] != undefined) {
+            if(listener)
+            db.notifications[tableName].pushIfNotExist(listener,function(e) {
+                return e === listener;
+            });
+        } else {
+            Console.log('WARNING: tying to add listener to table that dose not exist (' + tableName + ')');
+        }
+    },
+    removeListener: function(tableName, listener) {
+        if (db.notifications[tableName] != undefined) {
+            for(var i = db.notifications[tableName].length-1; i >= 0; i-- ) {
+                if(db.notifications[tableName][i] === listener) {
+                    db.notifications[tableName].splice(i,1);
+                }
+            }
+        } else {
+            Console.log('WARNING: tying to remove listener to table that dose not exist ('+tableName+')');
+        }
+    },
     //Data base set up and loading
     loadFirebase: function() {
         // Initialize Firebase
@@ -76,7 +106,9 @@ var db = {
     },
     updateFaction: function(faction) {
         var data = faction.buildJSON();
-        return db._ref.factions.update(data);
+        console.log('here ' + faction.udid);
+        console.log(data);
+        return db._ref.factions.child(faction.udid).update(data);
     },
     removeFaction: function(faction) {
         var data = faction.buildJSON();
@@ -96,6 +128,15 @@ var db = {
                 updatedfactions[key] = f;
             }
             db.factions = updatedfactions;
+            //now update listeners
+            for (var i = 0; i < db.notifications.factions.length; i++) {
+                var callbackObject = db.notifications.factions[i];
+                if (typeof callbackObject.factionsUpdated === "function") {
+                    callbackObject.factionsUpdated();
+                } else {
+                    console.log('WARRING: factionsUpdated() not defined for listener '+callbackObject);
+                }
+            }
         }
     },
     //Character CRUD

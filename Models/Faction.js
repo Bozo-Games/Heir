@@ -2,6 +2,7 @@ function Faction(json) {
     this.udid = null;
     this.name = json.name;
 
+    this.playerIP = null;
     this.color = '#FF0000';
     this.leader = null;
     this.heir = null;
@@ -22,12 +23,14 @@ Faction.prototype.loadJSON  = function (json) {
         this.udid = (json.id == undefined) ? null : json.id;
         this.name = json.name;
         this.colorIndex = json.colorIndex;
+        this.playerIP =  (json.playerIP == undefined) ? null : json.id;
     }
 };
 Faction.prototype.buildJSON = function (){
     return {
         id:this.udid,
-        name:this.name
+        name:this.name,
+        playerIP:this.playerIP
     }
 };
 Faction.prototype.draw = function(x,y) {

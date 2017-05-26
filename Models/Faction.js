@@ -23,7 +23,7 @@ Faction.prototype.loadJSON  = function (json) {
         this.udid = (json.id == undefined) ? null : json.id;
         this.name = json.name;
         this.colorIndex = json.colorIndex;
-        this.playerIP =  (json.playerIP == undefined) ? null : json.id;
+        this.playerIP =  (json.playerIP == undefined) ? null : json.playerIP;
     }
 };
 Faction.prototype.buildJSON = function (){

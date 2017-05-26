@@ -41,12 +41,15 @@ LogInView.prototype.updateButtons = function() {
                 if(btn.class().indexOf("logInSelectedFactionBtn") == -1) {
                     btn.addClass("logInSelectedFactionBtn");
                 }
+                if(myFaction == undefined) {
+                    myFaction = faction;
+                }
             } else if(btn.class().indexOf("logInSelectedFactionBtn") != -1) {
                 btn.removeClass("logInSelectedFactionBtn");
             }
             var weekThis = this;
             var onClick = function () {
-                weekThis.onSelectFaction(btn);
+                weekThis.onSelectFaction(this);
             };
             btn.mouseClicked(onClick);
             btn.touchEnded(onClick);
@@ -71,11 +74,21 @@ LogInView.prototype.updateButtons = function() {
 LogInView.prototype.onSelectFaction = function(button) {
     var factionUDID = button.attribute("factionUdid");
     var faction = db.factions[factionUDID];
+    console.log('faction btn click - '+faction.name);
+    console.log('faction btn click - '+faction.udid);
+    console.log('faction btn click - '+factionUDID);
     if (faction != undefined) {
 
         if (button.class().indexOf("logInSelectedFactionBtn") == -1) {
             faction.playerIP = userIPAddress;
-            debug = db.updateFaction(faction);
+            db.updateFaction(faction);
+            if(myFaction) {
+                if (myFaction.udid != faction.udid) {
+                    myFaction.playerIP = null;
+                    db.updateFaction(myFaction);
+                }
+            }
+            myFaction = faction;
         }
     } else {
         Console.log('ERROR: faction select button trying to select faction that dose not exist (' + factionUDID + ')');

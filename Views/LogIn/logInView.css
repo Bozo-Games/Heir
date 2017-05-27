@@ -7,12 +7,15 @@
     left: 10%;
     height: 5%;
     top: 10%;
-    background-color: #ff0000;
+    border-width: 5px;
     font-size: 2vh;
+}
+.alreadySelectedFaction {
+    left:60%;
+    border-color: #333333;
 }
 .logInSelectedFactionBtn {
     border-width: 15px;
-    border-color: #ffff00;
 }
 .clearAndReset {
     position: inherit;

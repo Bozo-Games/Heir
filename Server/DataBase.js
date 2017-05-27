@@ -83,6 +83,7 @@ var db = {
         console.log(error);
     },
     clearAndSeedDataBase: function() {
+        myFaction = null;
         db._ref.factions.remove();
         db._ref.characters.remove();
         db._ref.kingdoms.remove();
@@ -90,9 +91,11 @@ var db = {
         db._ref.quests.remove();
         db._ref.laws.remove();
 
-        db.createFaction(new Faction({name:"Test A"}));
-        db.createFaction(new Faction({name:"Test B"}));
-        db.createFaction(new Faction({name:"Test C"}));
+        db.createFaction(new Faction({name:"Test A",    color:COLOR.factions.a}));
+        db.createFaction(new Faction({name:"Test B",    color:COLOR.factions.b}));
+        db.createFaction(new Faction({name:"Test C",    color:COLOR.factions.c}));
+        db.createFaction(new Faction({name:"Test D",    color:COLOR.factions.d}));
+        db.createFaction(new Faction({name:"Test E",    color:COLOR.factions.e}));
 
         db.createCharacter(new Character({name:'Bob'}));
         db.createCharacter(new Character({name:'Frank'}));

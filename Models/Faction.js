@@ -24,13 +24,15 @@ Faction.prototype.loadJSON  = function (json) {
         this.name = json.name;
         this.colorIndex = json.colorIndex;
         this.playerIP =  (json.playerIP == undefined) ? null : json.playerIP;
+        this.color =  (json.color == undefined) ? '#888888' : json.color;
     }
 };
 Faction.prototype.buildJSON = function (){
     return {
         id:this.udid,
         name:this.name,
-        playerIP:this.playerIP
+        playerIP:this.playerIP,
+        color:this.color
     }
 };
 Faction.prototype.draw = function(x,y) {

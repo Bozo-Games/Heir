@@ -60,6 +60,7 @@ LogInView.prototype.updateButtons = function() {
             }
             var weekThis = this;
             var onClick = function () {
+                debug = userIPAddress;
                 weekThis.onSelectFaction(this);
             };
             btn.mouseClicked(onClick);
@@ -111,6 +112,7 @@ LogInView.prototype.onSelectFaction = function(button) {
             }
         }
     } else {
+        debug = 'ERROR: faction select button trying to select faction that dose not exist (' + factionUDID + ')';
         Console.log('ERROR: faction select button trying to select faction that dose not exist (' + factionUDID + ')');
     }
 };

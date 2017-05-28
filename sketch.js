@@ -7,23 +7,24 @@ var txt;
 var assets = {
     character: {}
 };
-var debug; //used as global in console to handle bugs
-
+var debug = "Debug"; //used as global in console to handle bugs
+var debugDiv;
 var logInView;
 function preload() {
     preloadAssets();
     db.loadFirebase();
     //db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
 
-    getUserIP(function(newIP) {userIPAddress = newIP;});
 }
 function setup() {
     //Intalize Models
-
     //Canvas is Zero Layer GUIs float above
     createCanvas(windowWidth, windowHeight);
     // Create the GUI (dom elements)
     logInView = new LogInView();
+    debugDiv = createP("Debug");
+    debugDiv.class('debugDiv');
+    debugDiv.position(0,0);
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
@@ -47,9 +48,10 @@ function draw() {
         y += 110;
     }
     //currentView.draw();
+    debugDiv.html(debug);
 }
-
 function keyTyped() {
+
 }
 function keyPressed() {
     for (var i = allViews.length-1; i >= 0; i--) {
@@ -65,7 +67,6 @@ function keyReleased() {
 }
 
 function mouseClicked() {
-    txt.position(mouseX,mouseY);
     for (var i = 0; i < allViews.length; i++ ) {
         allViews[i].mouseClicked();
     }

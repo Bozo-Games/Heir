@@ -7,6 +7,7 @@ function preloadAssets() {
     assets.character['default'] = loadImage('Assets/Characters/blank-character.png');
     //assests.character['army'] = loadImage('Assets/Characters/army_organiser.dds');
     assets.character['army'] = loadImage('Assets/Characters/army_organiser.png');
+    /*
     assets.character[''] = loadImage('Assets/Characters/army_organiser_female.png');
     assets.character[''] = loadImage('Assets/Characters/army_reformer.png');
     assets.character[''] = loadImage('Assets/Characters/army_reformer_female.png');
@@ -94,6 +95,6 @@ function preloadAssets() {
     assets.character[''] = loadImage('Assets/Characters/trader.png');
     assets.character[''] = loadImage('Assets/Characters/trader_female.png');
     assets.character[''] = loadImage('Assets/Characters/treasurer.png');
-    assets.character[''] = loadImage('Assets/Characters/treasurer_female.png');
+    assets.character[''] = loadImage('Assets/Characters/treasurer_female.png');*/
 
 }

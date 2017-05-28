@@ -126,7 +126,12 @@ var db = {
             // Loop through array
             for (var i = 0; i < keys.length; i++) {
                 var key = keys[i];
-                var f = new Faction(factions[key]);
+                var f = db.factions[key];
+                if(f == undefined) {
+                    f = new Faction(factions[key]);
+                } else {
+                    f.loadJSON(factions[key]);
+                }
                 f.udid = key;
                 updatedfactions[key] = f;
             }

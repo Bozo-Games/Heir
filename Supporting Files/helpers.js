@@ -17,8 +17,10 @@ function resourceNameByEnum(number) {
  * @return undefined
  */
 function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
+    alert('called');
     //compatibility for firefox and chrome
     var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+    alert('called 2');
     var pc = new myPeerConnection({
             iceServers: []
         }),
@@ -27,6 +29,7 @@ function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
         ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
         key;
 
+    alert('called 3');
     function iterateIP(ip) {
         if (!localIPs[ip]) onNewIP(ip);
         localIPs[ip] = true;
@@ -44,6 +47,7 @@ function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
 
         pc.setLocalDescription(sdp, noop, noop);
     }).catch(function(reason) {
+        alert(reason);
         // An error occurred, so handle the failure to connect
     });
 

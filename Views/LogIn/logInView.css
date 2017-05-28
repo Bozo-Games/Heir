@@ -12,10 +12,10 @@
 }
 .alreadySelectedFaction {
     left:60%;
-    border-color: #333333;
 }
 .logInSelectedFactionBtn {
-    border-width: 15px;
+    background-color: #ffff00;
+
 }
 .clearAndReset {
     position: inherit;

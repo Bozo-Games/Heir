@@ -8,10 +8,13 @@ var txt;
 var assets = {
     character: {}
 };
+var onTV = {
+    factions: {},
+    characters: {}
+};
 var debug = "Debug 4"; //used as global in console to handle bugs
 var debugDiv;
 var logInView;
-
 function preload() {
     var loaclVerssion =  localStorage.getItem("version");
     if(loaclVerssion == version) {
@@ -29,7 +32,6 @@ function preload() {
     localStorage.setItem('userID',userLocalID);
     preloadAssets();
     db.loadFirebase();
-    //db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress
 
 }
 function setup() {
@@ -50,19 +52,27 @@ function windowResized() {
     }
 }
 function draw() {
+    if(myKingdom) {
+        if(myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView) {
+            logInView.destroy();
+            logInView = undefined;
+            if(myFaction) {
 
-    background(0);
-    var x = 50;
-    var factionKeys = Object.keys(db.factions) ;
-    for (var i = factionKeys.length-1; i >= 0; i--) {
-        db.factions[factionKeys[i]].draw(x,50);
-        x += 110;
+            } else { //we are in game as TV
+                onTV.factions = {};
+                for(var f in db.factions) {
+                    var faction = db.factions[f];
+                    if (faction.playerCookieID ) {
+                        onTV.factions[f] = faction;
+                    }
+                }
+            }
+        }
     }
-    var y = 250;
-    var characterKeys = Object.keys(db.characters);
-    for (var i = characterKeys.length-1; i >= 0; i--) {
-        db.characters[characterKeys[i]].draw(75,y);
-        y += 110;
+    background(0);
+    for(var f in onTV.factions) {
+        var faction = db.factions[f];
+        faction.draw(0,0);
     }
     //currentView.draw();
     debugDiv.html(debug);

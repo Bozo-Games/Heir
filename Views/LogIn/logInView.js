@@ -11,7 +11,7 @@ function LogInView() {
 
     this.clearBtn = createButton('Clear And Reset');
     this.clearBtn.class('clearAndReset');
-    this.clearBtn.mouseClicked(db.clearAndSeedDataBase);
+    this.clearBtn.mouseReleased(db.clearAndSeedDataBase);
     //this.clearBtn.touchEnded(db.clearAndSeedDataBase);
 
     this.div.child(this.clearBtn);
@@ -19,8 +19,8 @@ function LogInView() {
     this.startGameBtn = createButton('Start Game');
     this.startGameBtn.class('startGame');
 
-    this.startGameBtn.mouseClicked(logTODOFunction('start game'));
-    this.startGameBtn.touchEnded(logTODOFunction('start game'));
+    this.startGameBtn.mouseReleased(logTODOFunction('start game'));
+    //this.startGameBtn.touchEnded(logTODOFunction('start game'));
 
     this.div.child(this.startGameBtn);
 
@@ -88,9 +88,11 @@ LogInView.prototype.updateButtons = function() {
 
     this.isSelecting = false;
 };
+LogInView.prototype.destroy = function () {
+    this.div.remove();
+};
 LogInView.prototype.onSelectFaction = function(button) {
     if(!this.isSelecting) {
-        print(this);
         this.isSelecting = true;
         var factionUDID = button.attribute("factionUdid");
         var faction = db.factions[factionUDID];

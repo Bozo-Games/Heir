@@ -108,10 +108,39 @@ var db = {
         db.createFaction(new Faction({name:"Test D",    color:COLOR.factions.d}));
         db.createFaction(new Faction({name:"Test E",    color:COLOR.factions.e}));
 
-        db.createCharacter(new Character({name:'Bob'}));
-        db.createCharacter(new Character({name:'Frank'}));
-        db.createCharacter(new Character({name:'Clare'}));
-        db.createCharacter(new Character({name:'Jill'}));
+
+        db.createCharacter(new Character({name:'Doria',     body:0, mind:0, spirit:0}));
+        db.createCharacter(new Character({name:'Nicholas',  body:1, mind:2, spirit:2}));
+        db.createCharacter(new Character({name:'Blondelle', body:1, mind:2, spirit:0}));
+        db.createCharacter(new Character({name:'Flori',     body:3, mind:0, spirit:1}));
+        db.createCharacter(new Character({name:'Jarrid',    body:2, mind:0, spirit:0}));
+        db.createCharacter(new Character({name:'Loutitia',  body:0, mind:3, spirit:0}));
+        db.createCharacter(new Character({name:'Dean',      body:3, mind:0, spirit:2}));
+        db.createCharacter(new Character({name:'Alexa',     body:2, mind:2, spirit:0}));
+        db.createCharacter(new Character({name:'Alano',     body:3, mind:2, spirit:1}));
+        db.createCharacter(new Character({name:'Willa',     body:1, mind:3, spirit:3}));
+        db.createCharacter(new Character({name:'Jase',      body:1, mind:0, spirit:0}));
+        db.createCharacter(new Character({name:'Pietrek',   body:1, mind:0, spirit:2}));
+        db.createCharacter(new Character({name:'Yalonda',   body:2, mind:1, spirit:0}));
+        db.createCharacter(new Character({name:'Fran',      body:1, mind:2, spirit:1}));
+        db.createCharacter(new Character({name:'Candy',     body:1, mind:0, spirit:3}));
+        db.createCharacter(new Character({name:'Ives',      body:2, mind:0, spirit:2}));
+        db.createCharacter(new Character({name:'Gav',       body:1, mind:3, spirit:2}));
+        db.createCharacter(new Character({name:'Henriette', body:2, mind:1, spirit:3}));
+        db.createCharacter(new Character({name:'Michel',    body:3, mind:0, spirit:0}));
+        db.createCharacter(new Character({name:'Wendie',    body:0, mind:2, spirit:1}));
+        db.createCharacter(new Character({name:'Renata',    body:0, mind:3, spirit:1}));
+        db.createCharacter(new Character({name:'Nanni',     body:3, mind:0, spirit:2}));
+        db.createCharacter(new Character({name:'Babita',    body:2, mind:3, spirit:0}));
+        db.createCharacter(new Character({name:'Purcell',   body:3, mind:2, spirit:1}));
+        db.createCharacter(new Character({name:'Roy',       body:1, mind:0, spirit:0}));
+        db.createCharacter(new Character({name:'Delaney',   body:2, mind:2, spirit:2}));
+        db.createCharacter(new Character({name:'Britt',     body:3, mind:2, spirit:0}));
+        db.createCharacter(new Character({name:'Bail',      body:0, mind:2, spirit:0}));
+        db.createCharacter(new Character({name:'Weber',     body:3, mind:2, spirit:3}));
+        db.createCharacter(new Character({name:'Eric',      body:2, mind:0, spirit:3}));
+        db.createCharacter(new Character({name:'Camella',   body:1, mind:0, spirit:2}));
+        db.createCharacter(new Character({name:'Babbette',  body:3, mind:0, spirit:3}));
     },
 
     //Kingdom CRUD
@@ -187,12 +216,13 @@ var db = {
             }
             db.factions = updatedfactions;
             //now update listeners
-            for (var i = 0; i < db.notifications.factions.length; i++) {
+            for (var i = db.notifications.factions.length - 1; i >= 0; i--) {
                 var callbackObject = db.notifications.factions[i];
                 if (typeof callbackObject.factionsUpdated === "function") {
                     callbackObject.factionsUpdated();
                 } else {
-                    console.log('WARRING: factionsUpdated() not defined for listener '+callbackObject);
+                    console.log('WARRING: factionsUpdated() not defined for listener and will be removed '+callbackObject);
+                    db.notifications.factions.splice(i,1);
                 }
             }
         }

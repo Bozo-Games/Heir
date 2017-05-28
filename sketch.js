@@ -12,6 +12,7 @@ var onTV = {
     factions: {},
     characters: {}
 };
+var showLogInTimeOut = 500;
 var debug = "Debug 4"; //used as global in console to handle bugs
 var debugDiv;
 var logInView;
@@ -52,8 +53,11 @@ function windowResized() {
     }
 }
 function draw() {
+    if(logInView) {
+        showLogInTimeOut --;
+    }
     if(myKingdom) {
-        if(myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView) {
+        if(myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView && showLogInTimeOut < 0) {
             logInView.destroy();
             logInView = undefined;
             if(myFaction) {
@@ -64,6 +68,9 @@ function draw() {
                     var faction = db.factions[f];
                     if (faction.playerCookieID ) {
                         onTV.factions[f] = faction;
+                        if (!faction.leader) {
+
+                        }
                     }
                 }
             }
@@ -72,6 +79,7 @@ function draw() {
     background(0);
     for(var f in onTV.factions) {
         var faction = db.factions[f];
+        var dx = 10;
         faction.draw(0,0);
     }
     //currentView.draw();

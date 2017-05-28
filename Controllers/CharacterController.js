@@ -1,0 +1,6 @@
+
+var CharacterController = {
+    charactersUpdated: function () {
+
+    }
+};

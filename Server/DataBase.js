@@ -150,7 +150,7 @@ var db = {
     },
     updateKingdom: function (kingdom) {
         var data = kingdom.buildJSON();
-        return db._ref.kingdoms.update(data);
+        return db._ref.kingdoms.child(kingdom.udid).update(data);
     },
     gotKingdomData: function(data) {
         var kingdoms = data.val();
@@ -165,6 +165,7 @@ var db = {
                 if(k == undefined) {
                     k = new Kingdom(kingdoms[key]);
                 } else {
+                    print('loading up kingdom');
                     k.loadJSON(kingdoms[key]);
                 }
                 k.udid = key;

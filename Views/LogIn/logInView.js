@@ -19,7 +19,13 @@ function LogInView() {
     this.startGameBtn = createButton('Start Game');
     this.startGameBtn.class('startGame');
 
-    this.startGameBtn.mouseReleased(logTODOFunction('start game'));
+    this.startGameBtn.mouseReleased(function() {
+            if (myKingdom) {
+                myKingdom.gamePhase = STATIC.gamePhase.initialKingSelect;
+                db.updateKingdom(myKingdom);
+            }
+        }
+    );
     //this.startGameBtn.touchEnded(logTODOFunction('start game'));
 
     this.div.child(this.startGameBtn);

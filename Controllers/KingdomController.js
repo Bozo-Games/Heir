@@ -20,11 +20,10 @@ var KingdomController = {
                         break;
                     }
                 }
-
             } else {
                 print("ERROR: Kingdom Controller can't find myKingdom or any kingdom in the Database");
             }
         }
-        debug = myKingdom.name;
+        debug = myKingdom.name + ' | (' + Object.keys(STATIC.gamePhase)[myKingdom.gamePhase] + ')';
     }
 };

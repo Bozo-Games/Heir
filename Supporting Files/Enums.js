@@ -1,11 +1,13 @@
 var STATIC = {
     gamePhase: {
         newGame: 0,
-        questBuilding: 1,
-        questSelection: 2,
-        resourceCommitment: 3,
-        questSimulation: 4,
-        questResolution: 5
+        initialKingSelect: 1,
+        questBuilding: 2,
+        questSelection: 3,
+        resourceCommitment: 4,
+        questSimulation: 5,
+        questResolution: 6,
+        HeirInherits: 7
     },
     questArchetype : {
         underConstruction: -1,

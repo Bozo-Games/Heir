@@ -109,7 +109,7 @@ var db = {
     },
     updateFaction: function(faction) {
         var data = faction.buildJSON();
-        console.log('here ' + faction.udid);
+        print('pushing update ' + data.name);
         console.log(data);
         return db._ref.factions.child(faction.udid).update(data);
     },
@@ -119,6 +119,7 @@ var db = {
     },
     gotFactionData: function(data) {// The data comes back as an object
         var factions = data.val();
+        print('faction data ' + factions);
         // Grab all the keys to iterate over the object
         if(factions) {
             var keys = Object.keys(factions);
@@ -130,7 +131,7 @@ var db = {
                 if(f == undefined) {
                     f = new Faction(factions[key]);
                 } else {
-                    print('updateing ' + f.name + '\n' + factions[key]);
+                    print('got update ' + f.name + '\n' + factions[key].playerCookieID);
                     f.loadJSON(factions[key]);
                 }
                 f.udid = key;

@@ -12,7 +12,7 @@ function LogInView() {
     this.clearBtn = createButton('Clear And Reset');
     this.clearBtn.class('clearAndReset');
     this.clearBtn.mouseClicked(db.clearAndSeedDataBase);
-    this.clearBtn.touchEnded(db.clearAndSeedDataBase);
+    //this.clearBtn.touchEnded(db.clearAndSeedDataBase);
 
     this.div.child(this.clearBtn);
 
@@ -28,6 +28,7 @@ function LogInView() {
 
 }
 LogInView.prototype.updateButtons = function() {
+    this.isSelecting = true;
     var tempBtns = {};
     for (var udid in db.factions) {
         if (db.factions.hasOwnProperty(udid)) {
@@ -36,7 +37,16 @@ LogInView.prototype.updateButtons = function() {
             if(btn == undefined) {
                 btn =  createButton(faction.name);
                 btn.attribute('factionUdid',udid);
-                btn.addClass('logInFactionSelectBtn');
+                btn.addClass('logInFactionSelectBtn')
+                var weekThis = this;
+                var onClick =  function () {
+                    print('I am called + ' + this.html());
+                    debug = userLocalID;
+                    weekThis.onSelectFaction(this);
+                    return false; //foces propegations to stop
+                };
+                btn.mouseReleased(onClick);
+                //btn.touchEnded(onClick);
                 this.div.child(btn);
             }
             if(faction.playerCookieID == userLocalID) {
@@ -59,13 +69,7 @@ LogInView.prototype.updateButtons = function() {
                     btn.removeClass('alreadySelectedFaction');
                 }
             }
-            var weekThis = this;
-            var onClick = function () {
-                debug = userLocalID;
-                weekThis.onSelectFaction(this);
-            };
-            btn.mouseClicked(onClick);
-            btn.touchEnded(onClick);
+
             tempBtns[udid] = btn;
             delete this.factionSelectBtns[udid];
         }
@@ -84,12 +88,19 @@ LogInView.prototype.updateButtons = function() {
         i+=8;
     }
 
+    print('=========================== updated ===========================');
     this.isSelecting = false;
 };
+LogInView.prototype.mouseReleased = function() {
+    print(' i amd maset of none');
+    return false;
+}
 LogInView.prototype.onSelectFaction = function(button) {
     if(!this.isSelecting) {
+        print(this);
         this.isSelecting = true;
         print('-------------------------- start -----------------------------');
+        print(button.html());
         var factionUDID = button.attribute("factionUdid");
         var faction = db.factions[factionUDID];
         if (faction != undefined) {
@@ -103,16 +114,19 @@ LogInView.prototype.onSelectFaction = function(button) {
                 if (myFaction) {
                     if (myFaction.udid != faction.udid) {
                         myFaction.playerCookieID = null;
+                        print('update fation A');
                         db.updateFaction(myFaction);
                     }
                 }
                 myFaction = faction;
+                print('update fation B');
                 db.updateFaction(myFaction);
             } else if (othersSelection) {
                 print('WARNING: trying to select already selected faction');
             } else if (isMySelection) {
                 if (faction.udid == myFaction.udid) {
                     myFaction.playerCookieID = null;
+                    print('update fation C');
                     db.updateFaction(myFaction);
                     myFaction = null;
                 } else {

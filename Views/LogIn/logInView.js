@@ -40,8 +40,6 @@ LogInView.prototype.updateButtons = function() {
                 btn.addClass('logInFactionSelectBtn')
                 var weekThis = this;
                 var onClick =  function () {
-                    print('I am called + ' + this.html());
-                    debug = userLocalID;
                     weekThis.onSelectFaction(this);
                     return false; //foces propegations to stop
                 };
@@ -88,27 +86,17 @@ LogInView.prototype.updateButtons = function() {
         i+=8;
     }
 
-    print('=========================== updated ===========================');
     this.isSelecting = false;
 };
-LogInView.prototype.mouseReleased = function() {
-    print(' i amd maset of none');
-    return false;
-}
 LogInView.prototype.onSelectFaction = function(button) {
     if(!this.isSelecting) {
         print(this);
         this.isSelecting = true;
-        print('-------------------------- start -----------------------------');
-        print(button.html());
         var factionUDID = button.attribute("factionUdid");
         var faction = db.factions[factionUDID];
         if (faction != undefined) {
-            print('faction found - ' + faction.name);
             var othersSelection = button.class().indexOf("alreadySelectedFaction") != -1;
             var isMySelection = button.class().indexOf("logInSelectedFactionBtn") != -1;
-            print('faction is other selected - ' + othersSelection);
-            print('faction is my selection - ' + isMySelection);
             if (!isMySelection && !othersSelection) {
                 faction.playerCookieID = userLocalID;
                 if (myFaction) {
@@ -134,8 +122,7 @@ LogInView.prototype.onSelectFaction = function(button) {
                 }
             }
         } else {
-            debug = 'ERROR: faction select button trying to select faction that dose not exist (' + factionUDID + ')';
-            Console.log('ERROR: faction select button trying to select faction that dose not exist (' + factionUDID + ')');
+            print('ERROR: faction select button trying to select faction that dose not exist (' + factionUDID + ')');
         }
     } else {
 

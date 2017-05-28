@@ -60,14 +60,15 @@ var db = {
         firebase.initializeApp(config);
         db._database = firebase.database();
 
+        db._ref.kingdoms = db._database.ref('Kingdoms');
+        db._ref.kingdoms.on("value", db.gotKingdomData, db.errData);
+
         db._ref.factions = db._database.ref('Factions');
         db._ref.factions.on("value", db.gotFactionData, db.errData);
 
         db._ref.characters = db._database.ref('Characters');
         db._ref.characters.on("value", db.gotCharacterData, db.errData);
 
-        db._ref.kingdoms = db._database.ref('Kingdoms');
-        db._ref.kingdoms.on("value", db.gotKingdomData, db.errData);
 
         db._ref.titles = db._database.ref('Titles');
         db._ref.titles.on("value", db.gotTitleData, db.errData);
@@ -91,6 +92,16 @@ var db = {
         db._ref.quests.remove();
         db._ref.laws.remove();
 
+        var currentdate = new Date();
+        var datetime =  currentdate.getDate() + "/"
+            + (currentdate.getMonth()+1)  + "/"
+            + currentdate.getFullYear() + " @ "
+            + currentdate.getHours() + ":"
+            + currentdate.getMinutes() + ":"
+            + currentdate.getSeconds();
+
+        db.createKingdom(new Kingdom({name:"The Great Bozo Kingdom of - " + datetime}));
+
         db.createFaction(new Faction({name:"Test A",    color:COLOR.factions.a}));
         db.createFaction(new Faction({name:"Test B",    color:COLOR.factions.b}));
         db.createFaction(new Faction({name:"Test C",    color:COLOR.factions.c}));
@@ -102,6 +113,47 @@ var db = {
         db.createCharacter(new Character({name:'Clare'}));
         db.createCharacter(new Character({name:'Jill'}));
     },
+
+    //Kingdom CRUD
+    createKingdom: function (newKingdom) {
+        var data = newKingdom.buildJSON();
+        return db._ref.kingdoms.push(data);
+    },
+    updateKingdom: function (kingdom) {
+        var data = kingdom.buildJSON();
+        return db._ref.kingdoms.update(data);
+    },
+    gotKingdomData: function(data) {
+        var kingdoms = data.val();
+        // Grab all the keys to iterate over the object
+        if(kingdoms) {
+            var keys = Object.keys(kingdoms);
+            var updatedKingdoms = {};
+            // Loop through array
+            for (var i = 0; i < keys.length; i++) {
+                var key = keys[i];
+                var k = db.kingdoms[key];
+                if(k == undefined) {
+                    k = new Kingdom(kingdoms[key]);
+                } else {
+                    k.loadJSON(kingdoms[key]);
+                }
+                k.udid = key;
+                updatedKingdoms[key] = k;
+            }
+            db.kingdoms = updatedKingdoms;
+
+            //now update listeners
+            for (var i = 0; i < db.notifications.kingdoms.length; i++) {
+                var callbackObject = db.notifications.kingdoms[i];
+                if (typeof callbackObject.kingdomsUpdated === "function") {
+                    callbackObject.kingdomsUpdated();
+                } else {
+                    console.log('WARRING: kingdomsUpdated() not defined for listener '+callbackObject);
+                }
+            }
+        }
+    },
     //Faction CRUD
     createFaction: function(newFaction) {
         var data = newFaction.buildJSON();
@@ -109,8 +161,6 @@ var db = {
     },
     updateFaction: function(faction) {
         var data = faction.buildJSON();
-        print('pushing update ' + data.name);
-        console.log(data);
         return db._ref.factions.child(faction.udid).update(data);
     },
     removeFaction: function(faction) {
@@ -119,7 +169,6 @@ var db = {
     },
     gotFactionData: function(data) {// The data comes back as an object
         var factions = data.val();
-        print('faction data ' + factions);
         // Grab all the keys to iterate over the object
         if(factions) {
             var keys = Object.keys(factions);
@@ -131,7 +180,6 @@ var db = {
                 if(f == undefined) {
                     f = new Faction(factions[key]);
                 } else {
-                    print('got update ' + f.name + '\n' + factions[key].playerCookieID);
                     f.loadJSON(factions[key]);
                 }
                 f.udid = key;
@@ -172,31 +220,6 @@ var db = {
                 updatedharacters[key] = c;
             }
             db.characters = updatedharacters;
-        }
-    },
-    //Kingdom CRUD
-    createKingdom: function (newKingdom) {
-        var data = newKingdom.buildJSON();
-        return db._ref.kingdoms.push(data);
-    },
-    updateKingdom: function (kingdom) {
-        var data = kingdom.buildJSON();
-        return db._ref.kingdoms.update(data);
-    },
-    gotKingdomData: function(data) {
-        var kingdoms = data.val();
-        // Grab all the keys to iterate over the object
-        if(kingdoms) {
-            var keys = Object.keys(kingdoms);
-            var updatedharacters = {};
-            // Loop through array
-            for (var i = 0; i < keys.length; i++) {
-                var key = keys[i];
-                var c = new Kingdom(kingdoms[key]);
-                c.udid = key;
-                updatedharacters[key] = c;
-            }
-            db.kingdoms = updatedharacters;
         }
     },
     //Title CRUD

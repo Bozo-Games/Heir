@@ -4,7 +4,6 @@ var allViews = [];
 var topFactionsView;
 var userLocalID;
 var myFaction;
-var myKindom;
 var txt;
 var assets = {
     character: {}
@@ -35,6 +34,7 @@ function preload() {
 }
 function setup() {
     //Intalize Models
+    db.addListener('kingdoms',KingdomController);
     //Canvas is Zero Layer GUIs float above
     createCanvas(windowWidth, windowHeight);
     // Create the GUI (dom elements)

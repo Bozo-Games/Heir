@@ -130,6 +130,7 @@ var db = {
                 if(f == undefined) {
                     f = new Faction(factions[key]);
                 } else {
+                    print('updateing ' + f.name + '\n' + factions[key]);
                     f.loadJSON(factions[key]);
                 }
                 f.udid = key;

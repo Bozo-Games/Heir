@@ -1,16 +1,33 @@
+var version = "0.0.1";
+
 var allViews = [];
 var topFactionsView;
-var userIPAddress;
+var userLocalID;
 var myFaction;
 var myKindom;
 var txt;
 var assets = {
     character: {}
 };
-var debug = "Debug"; //used as global in console to handle bugs
+var debug = "Debug 4"; //used as global in console to handle bugs
 var debugDiv;
 var logInView;
+
 function preload() {
+    var loaclVerssion =  localStorage.getItem("version");
+    if(loaclVerssion == version) {
+        print('versions match ' + version);
+        userLocalID = localStorage.getItem('userID');
+        localStorage.setItem('version',version);
+    } else {
+        print('hard reload');
+        localStorage.setItem('version',version);
+        location.reload(true);
+    }
+    if(userLocalID == undefined) {
+        userLocalID = buildUserID();
+    }
+    localStorage.setItem('userID',userLocalID);
     preloadAssets();
     db.loadFirebase();
     //db.clearAndSeedDataBase(); //TODO remove and make button so we can join game in progress

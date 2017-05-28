@@ -11,53 +11,15 @@ function resourceNameByEnum(number) {
     }
     return "ERROR: Resource enum " + number + " is not valid.";
 }
-/**
- * Get the user IP throught the webkitRTCPeerConnection
- * @param onNewIP {Function} listener function to expose the IP locally
- * @return undefined
- */
-function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
-    alert('called');
-    //compatibility for firefox and chrome
-    var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-    alert('called 2');
-    var pc = new myPeerConnection({
-            iceServers: []
-        }),
-        noop = function() {},
-        localIPs = {},
-        ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-        key;
-
-    alert('called 3');
-    function iterateIP(ip) {
-        if (!localIPs[ip]) onNewIP(ip);
-        localIPs[ip] = true;
+function buildUserID() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
     }
-
-    //create a bogus data channel
-    pc.createDataChannel("");
-
-    // create offer and set local description
-    pc.createOffer().then(function(sdp) {
-        sdp.sdp.split('\n').forEach(function(line) {
-            if (line.indexOf('candidate') < 0) return;
-            line.match(ipRegex).forEach(iterateIP);
-        });
-
-        pc.setLocalDescription(sdp, noop, noop);
-    }).catch(function(reason) {
-        alert(reason);
-        // An error occurred, so handle the failure to connect
-    });
-
-    //listen for candidate events
-    pc.onicecandidate = function(ice) {
-        if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-    };
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
 }
-
 // check if an element exists in array using a comparer function
 // comparer : function(currentElement)
 Array.prototype.inArray = function(comparer) {

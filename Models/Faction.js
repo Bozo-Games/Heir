@@ -2,7 +2,7 @@ function Faction(json) {
     this.udid = null;
     this.name = json.name;
 
-    this.playerIP = null;
+    this.playerCookieID = null;
     this.color = '#FF0000';
     this.leader = null;
     this.heir = null;
@@ -23,7 +23,7 @@ Faction.prototype.loadJSON  = function (json) {
         this.udid = (json.id == undefined) ? null : json.id;
         this.name = json.name;
         this.colorIndex = json.colorIndex;
-        this.playerIP =  (json.playerIP == undefined) ? null : json.playerIP;
+        this.playerCookieID =  (json.playerCookieID == undefined) ? null : json.playerCookieID;
         this.color =  (json.color == undefined) ? '#888888' : json.color;
     }
 };
@@ -31,7 +31,7 @@ Faction.prototype.buildJSON = function (){
     return {
         id:this.udid,
         name:this.name,
-        playerIP:this.playerIP,
+        playerCookieID:this.playerCookieID,
         color:this.color
     }
 };

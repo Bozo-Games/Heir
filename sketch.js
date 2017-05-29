@@ -55,7 +55,6 @@ function draw() {
     if (iAmHost) {
 
     }
-
     background(0); //clears previous drawing on canvas
     if (iAmTV) {
         renderTVView();
@@ -93,6 +92,8 @@ function renderLogInView() {
         if (myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView && showLogInTimeOut < 0) {
             logInView.destroy();
             logInView = undefined;
+        }
+        if(iAmHost) {
 
         }
     }

@@ -1,11 +1,13 @@
 var allLaws = [];
 
-var randomStart = new Law({name:'random start law'});
-randomStart.shouldProccessEffect = function () {
-    if(myKingdom.gamePhase == STATIC.gamePhase.newGame && iAmHost) {
-         return true;
-    } else {
-        return false;
+var randomStart = new Law({name:'random start law', isActive:true});
+randomStart.shouldProcessEffect = function () {
+    if(myKingdom) {
+        if(myKingdom.gamePhase == STATIC.gamePhase.newGame && iAmHost ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 randomStart.effect = function () {

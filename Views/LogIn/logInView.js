@@ -24,6 +24,12 @@ function LogInView() {
 
     this.startGameBtn.mouseReleased(function() {
             if (myKingdom) {
+                if(myKingdom.hostID == userLocalID) {
+
+                } else if(!myKingdom.hostID) {
+                    myKingdom.hostID = userLocalID;
+                    processLaws(myKingdom.gamePhase,STATIC.gamePhase.initialKingSelect);
+                }
                 myKingdom.gamePhase = STATIC.gamePhase.initialKingSelect;
                 db.updateKingdom(myKingdom);
             }

@@ -1,18 +1,18 @@
 var version = "0.0.2";
 
-var allViews = [];
-var topFactionsView;
-var userLocalID;
+var iAmHost = false;
+var myFaction = undefined;
+var hostID = undefined;
+var iAmTV = false;
+var iAmPlayer = false;
+var myID = undefined;
+
+var userLocalID; //could be tv could be player not sure until game starts
 var myFaction;
 var txt;
 var assets = {
     character: {}
 };
-var onTV = {
-    factions: {},
-    characters: {}
-};
-var showLogInTimeOut = 500;
 var debug = "Debug 4"; //used as global in console to handle bugs
 var debugDiv;
 var logInView;
@@ -41,7 +41,6 @@ function setup() {
     //Canvas is Zero Layer GUIs float above
     createCanvas(windowWidth, windowHeight);
     // Create the GUI (dom elements)
-    logInView = new LogInView();
     debugDiv = createP("Debug");
     debugDiv.class('debugDiv');
     debugDiv.position(0,0);
@@ -53,34 +52,17 @@ function windowResized() {
     }
 }
 function draw() {
-    if(logInView) {
-        showLogInTimeOut --;
-    }
-    if(myKingdom) {
-        if(myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView && showLogInTimeOut < 0) {
-            logInView.destroy();
-            logInView = undefined;
-            if(myFaction) {
+    if (iAmHost) {
 
-            } else { //we are in game as TV
-                onTV.factions = {};
-                for(var f in db.factions) {
-                    var faction = db.factions[f];
-                    if (faction.playerCookieID ) {
-                        onTV.factions[f] = faction;
-                        if (!faction.leader) {
-
-                        }
-                    }
-                }
-            }
-        }
     }
-    background(0);
-    for(var f in onTV.factions) {
-        var faction = db.factions[f];
-        var dx = 10;
-        faction.draw(0,0);
+
+    background(0); //clears previous drawing on canvas
+    if (iAmTV) {
+        renderTVView();
+    } else if (iAmPlayer) {
+        renderPlayerView();
+    } else { //
+        renderLogInView();
     }
     //currentView.draw();
     debugDiv.html(debug);
@@ -89,20 +71,38 @@ function keyTyped() {
 
 }
 function keyPressed() {
-    for (var i = allViews.length-1; i >= 0; i--) {
-        allViews[i].keyPressed();
-    }
     return false;
 }
 function keyReleased() {
-    for (var i = allViews.length-1; i >= 0; i--) {
-        allViews[i].keyReleased();
-    }
     return false;
 }
 
 function mouseClicked() {
-    for (var i = 0; i < allViews.length; i++ ) {
-        allViews[i].mouseClicked();
+}
+
+// ------------------------------------------------------------------------------------------------ Render functions
+// ------------------------------------------------------------------------------------------------ Render functions
+function renderLogInView() {
+    if (logInView) {
+        showLogInTimeOut--;
+    } else {
+        logInView = new LogInView();
     }
+
+    if (myKingdom) {
+        if (myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView && showLogInTimeOut < 0) {
+            logInView.destroy();
+            logInView = undefined;
+
+        }
+    }
+
+}
+// ------------------------------------------------------------------------------------------------ TV Render functions
+function renderTVView() {
+
+}
+// ------------------------------------------------------------------------------------------------ player Render functions
+function renderPlayerView() {
+
 }

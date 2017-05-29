@@ -1,3 +1,6 @@
+
+var showLogInTimeOut = 500; //will hide if join game in progress (allows tv to refresh)
+
 function LogInView() {
     db.addListener("factions",this);
 

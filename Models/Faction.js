@@ -25,6 +25,16 @@ Faction.prototype.loadJSON  = function (json) {
         this.colorIndex = json.colorIndex;
         this.playerCookieID =  (json.playerCookieID == undefined) ? null : json.playerCookieID;
         this.color =  (json.color == undefined) ? '#888888' : json.color;
+
+        if(json.leaderID) {
+            this.leader = db.characters[json.leaderID];
+        }
+        if(json.heirID) {
+            this.heir = db.characters[json.heirID];
+        }
+        if(json.championID) {
+            this.champion = db.characters[json.championID];
+        }
     }
 };
 Faction.prototype.buildJSON = function (){
@@ -32,7 +42,11 @@ Faction.prototype.buildJSON = function (){
         id:this.udid,
         name:this.name,
         playerCookieID:this.playerCookieID,
-        color:this.color
+        color:this.color,
+        leaderID:(this.leader == undefined) ? null : this.leader.udid,
+        heirID:(this.heir == undefined) ? null : this.heir.udid,
+        championID:(this.champion == undefined) ? null : this.champion.udid
+
     }
 };
 Faction.prototype.draw = function(x,y) {

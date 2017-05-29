@@ -35,9 +35,20 @@ Array.prototype.pushIfNotExist = function(element, comparer) {
         this.push(element);
     }
 };
-
 function logTODOFunction(msg) {
     return function () {
         console.log("TODO: "+ msg);
     }
+}
+function findRandomCharacterIDNotAsignedToFaction() {
+    var posible = [];
+    for (var c in db.characters) {
+        var character = db.characters[c];
+        if(!c.factionLoyalty) {
+            posible.push(c);
+        } else if(c.factionLoyalty == STATIC.factionLoyalties.none) {
+            posible.push(c);
+        }
+    }
+    return posible[Math.floor(Math.random() * posible.length)];
 }

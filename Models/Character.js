@@ -2,6 +2,7 @@ function Character(json) {
     this.udid = null;
     this.name = 'No Name';
     this.factionLoyalty = null;
+    this.loyalToFaction = null;
     this.stats = {
         body: 0,
         mind: 0,
@@ -17,13 +18,21 @@ Character.prototype.loadJSON = function(json) {
     if(json != undefined) {
         this.udid = (json.id == undefined) ? null : json.id;
         this.name = json.name;
+        this.factionLoyalty =  (json.factionLoyalty == undefined) ? STATIC.factionLoyalties.none : json.factionLoyalty;
 
+        if(json.loyalToFactionID) {
+            this.loyalToFaction = db.factions[json.loyalToFactionID];
+        }
+        this.prestige = (json.prestige == undefined) ? 0 : json.prestige;
     }
 };
 Character.prototype.buildJSON = function (){
     return {
         id:this.udid,
-        name:this.name
+        name:this.name,
+        loyalToFaction:(this.loyalToFaction == undefined) ? null : this.loyalToFaction.udid,
+        factionLoyalty: this.factionLoyalty,
+        prestige: this.prestige
     };
 };
 Character.prototype.draw = function(x,y) {

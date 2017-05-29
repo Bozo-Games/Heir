@@ -152,6 +152,14 @@ var db = {
         var data = kingdom.buildJSON();
         return db._ref.kingdoms.child(kingdom.udid).update(data);
     },
+    batchUpdateKindoms: function () {
+        var updates = {};
+        for(var k in db.kingdoms) {
+            var kingdom = db.kingdoms[k];
+            updates['/' + k] = kingdom.buildJSON();
+        }
+        return  db._ref.kingdoms.update(updates);
+    },
     gotKingdomData: function(data) {
         var kingdoms = data.val();
         // Grab all the keys to iterate over the object
@@ -192,6 +200,14 @@ var db = {
     updateFaction: function(faction) {
         var data = faction.buildJSON();
         return db._ref.factions.child(faction.udid).update(data);
+    },
+    batchUpdateFactions: function () {
+        var updates = {};
+        for(var f in db.factions) {
+            var faction = db.factions[f];
+            updates['/' + f] = faction.buildJSON();
+        }
+        return  db._ref.factions.update(updates);
     },
     removeFaction: function(faction) {
         var data = faction.buildJSON();
@@ -235,7 +251,15 @@ var db = {
     },
     updateCharacter: function (character) {
         var data = character.buildJSON();
-        return db._ref.characters.update(data);
+        return db._ref.factions.child(character.udid).update(data);
+    },
+    batchUpdateCharacters: function () {
+        var updates = {};
+        for(var c in db.characters) {
+            var character = db.characters[f];
+            updates['/' + c] = character.buildJSON();
+        }
+        return  db._ref.characters.update(updates);
     },
     gotCharacterData: function(data) {
         var characters = data.val();

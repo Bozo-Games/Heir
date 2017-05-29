@@ -20,5 +20,11 @@ var STATIC = {
         manpower: 0,
         food: 1,
         money: 2
+    },
+    factionLoyalties: {
+        none: 0,
+        leader: 1,
+        heir: 2,
+        champion: 3
     }
 };

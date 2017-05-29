@@ -11,6 +11,7 @@ function Law(json) {
     this.loadJSON(json);
 }
 Law.prototype.loadJSON = function(json) {
+    console.log('load json called');
     if(json) {
         this.udid = (json.id == undefined) ? null : json.id;
         this.name = json.name;

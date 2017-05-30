@@ -30,6 +30,8 @@ function LogInView() {
                     myKingdom.hostID = userLocalID;
                     processLaws(myKingdom.gamePhase,STATIC.gamePhase.initialKingSelect);
                 }
+                myKingdom.gamePhase = STATIC.gamePhase.initialKingSelect;
+                db.updateKingdom(myKingdom);
             }
         }
     );

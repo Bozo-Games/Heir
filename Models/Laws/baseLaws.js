@@ -10,7 +10,7 @@ randomStart.shouldProcessEffect = function () {
         }
     }
 };
-randomStart.processEffect = function () {
+randomStart.effect = function () {
     for(var f in db.factions) {
         var faction = db.factions[f];
         if (!faction.leader) {
@@ -29,10 +29,7 @@ randomStart.processEffect = function () {
     db.batchUpdateFactions();
     db.batchUpdateCharacters();
 };
-console.log(randomStart);
 allLaws.push(randomStart);
-
-console.log(allLaws[0]);
 
 
 

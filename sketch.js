@@ -94,7 +94,8 @@ function renderLogInView() {
             logInView = undefined;
         }
         if(iAmHost) {
-
+            fill(color(255,255,255));
+            rect(100,100,100,100);
         }
     }
 

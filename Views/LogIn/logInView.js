@@ -9,7 +9,6 @@ function LogInView() {
 
     this.resizeWindow(); //we need the w, h ect for things
     this.factionSelectBtns = {};
-    console.log(this.factionSelectBtns);
     this.updateButtons();
 
     this.clearBtn = createButton('Clear And Reset');

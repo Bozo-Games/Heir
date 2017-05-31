@@ -49,12 +49,12 @@ Faction.prototype.buildJSON = function (){
 
     }
 };
-Faction.prototype.draw = function(x,y) {
+Faction.prototype.draw = function(x,y,scale) {
     push();
     fill(color(255,255,255));
     stroke(this.color);
     strokeWeight(2);
-    rect(x,y,100,100,5);
+    rect(x,y,100*scale,100*scale,5);
     var resouceKeys = allResourceTypes();
     noStroke();
     for (var i = 0; i < resouceKeys.length; i++ ) {

@@ -52,3 +52,38 @@ function findRandomCharacterIDNotAsignedToFaction() {
     }
     return posible[Math.floor(Math.random() * posible.length)];
 }
+
+function locationOnCircle(cx,cy,r,a) {
+    var q = 0;
+    var theta = a;
+    var px = 1;
+    var py = 1;
+    if (a > Math.PI / 2) {
+        if(a > Math.PI) {
+            if(a > Math.PI * 1.5) {
+                theta = 2*Math.PI - a;
+                px = 1;
+                py = 1;
+                q = 4;
+            } else {
+                theta = a - Math.PI;
+                px = -1;
+                py = 1;
+                q = 3;
+            }
+        } else {
+            theta = Math.PI - a;
+            px = -1;
+            py = -1;
+            q = 2;
+        }
+    } else {
+        theta = a;
+        py = -1;
+        px = 1;
+        q = 1;
+    }
+    var x = cx + px * (Math.sqrt(Math.pow(r,2) - Math.pow(sin(theta) * r,2)));
+    var y = cy + py * (Math.sqrt(Math.pow(r,2) - Math.pow(cos(theta) * r,2)));
+    return {x:x,y:y,q:q};
+}

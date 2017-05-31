@@ -2,8 +2,12 @@
 var assets = {
     character: {},
     icon: {}
-}
+};
 function preloadAssets() {
+    assets = {
+        character: {},
+        icon: {}
+    };
     //Character Images
     assets.character['default'] = loadImage('Assets/Characters/blank-character.png');
     //assests.character['army'] = loadImage('Assets/Characters/army_organiser.dds');

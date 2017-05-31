@@ -1,12 +1,14 @@
 
 var assets = {
-    character: {}
+    character: {},
+    icon: {}
 }
 function preloadAssets() {
     //Character Images
     assets.character['default'] = loadImage('Assets/Characters/blank-character.png');
     //assests.character['army'] = loadImage('Assets/Characters/army_organiser.dds');
     assets.character['army'] = loadImage('Assets/Characters/army_organiser.png');
+    assets.icon['king'] = loadImage('Assets/Icons/King.png');
     /*
     assets.character[''] = loadImage('Assets/Characters/army_organiser_female.png');
     assets.character[''] = loadImage('Assets/Characters/army_reformer.png');

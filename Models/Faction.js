@@ -2,7 +2,7 @@ function Faction(json) {
     this.udid = null;
     this.name = json.name;
 
-    this.playerCookieID = null;
+    this.playerID = null;
     this.color = '#FF0000';
     this.leader = null;
     this.heir = null;
@@ -23,7 +23,7 @@ Faction.prototype.loadJSON  = function (json) {
         this.udid = (json.id == undefined) ? null : json.id;
         this.name = json.name;
         this.colorIndex = json.colorIndex;
-        this.playerCookieID =  (json.playerCookieID == undefined) ? null : json.playerCookieID;
+        this.playerID =  (json.playerID == undefined) ? null : json.playerID;
         this.color =  (json.color == undefined) ? '#888888' : json.color;
 
         if(json.leaderID) {
@@ -41,7 +41,7 @@ Faction.prototype.buildJSON = function (){
     return {
         id:this.udid,
         name:this.name,
-        playerCookieID:this.playerCookieID,
+        playerID:this.playerID,
         color:this.color,
         leaderID:(this.leader == undefined) ? null : this.leader.udid,
         heirID:(this.heir == undefined) ? null : this.heir.udid,

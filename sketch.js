@@ -20,7 +20,7 @@ function preload() {
     var loaclVerssion =  localStorage.getItem("version");
     if(loaclVerssion == version) {
         print('versions match ' + version);
-        userLocalID = localStorage.getItem('userID');
+        userLocalID = localStorage.getItem('userLocalID');
         localStorage.setItem('version',version);
     } else {
         print('hard reload');
@@ -30,7 +30,7 @@ function preload() {
     if(userLocalID == undefined) {
         userLocalID = buildUserID();
     }
-    localStorage.setItem('userID',userLocalID);
+    localStorage.setItem('userLocalID',userLocalID);
     preloadAssets();
     db.loadFirebase();
 
@@ -80,28 +80,39 @@ function mouseClicked() {
 }
 
 // ------------------------------------------------------------------------------------------------ Render functions
-// ------------------------------------------------------------------------------------------------ Render functions
-function renderLogInView() {
-    if (logInView) {
-        showLogInTimeOut--;
-    } else {
-        logInView = new LogInView();
-    }
 
-    if (myKingdom) {
-        if (myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView && showLogInTimeOut < 0) {
-            logInView.destroy();
-            logInView = undefined;
-        }
-        if(iAmHost) {
-
-        }
-    }
-
-}
 // ------------------------------------------------------------------------------------------------ TV Render functions
 function renderTVView() {
+  if (myKingdom) {
+    switch (myKingdom.gamePhase) {
+      case STATIC.gamePhase.newGame:
 
+        break;
+      case STATIC.gamePhase.initialKingSelect:
+        renderTVinialKingSelect();
+        break;
+      case STATIC.gamePhase.questBuilding:
+
+        break;
+      case STATIC.gamePhase.questSelection:
+
+        break;
+      case STATIC.gamePhase.questSimulation:
+
+        break;
+      case STATIC.gamePhase.questResolution:
+
+        break;
+      case STATIC.gamePhase.HeirInherits:
+
+        break;
+      case STATIC.gamePhase.scoreingTheGame:
+
+        break;
+      default:
+        debug = "Unkowen Kingdom state " + myKingdom.gamePhase;
+    }
+  }
 }
 // ------------------------------------------------------------------------------------------------ player Render functions
 function renderPlayerView() {

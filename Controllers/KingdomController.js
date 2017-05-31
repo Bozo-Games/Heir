@@ -6,9 +6,10 @@ var KingdomController = {
             if(serverKingdom == undefined) { //implies a new kingdom has been spawned
                 location.reload(true); //will force reload cause our versions don't match
             } else {
-                if (myKingdom.gameVersion != serverKingdom.gameVersion || myKingdom.udid != serverKingdom.udid) {
-                    alert('force reload');
+                if (myKingdom.udid != serverKingdom.udid) {
                     location.reload(true); //will force reload cause our versions don't match
+                } else {
+                  iAmHost = myKingdom.hostID == userLocalID;
                 }
             }
         } else {
@@ -24,6 +25,5 @@ var KingdomController = {
                 print("ERROR: Kingdom Controller can't find myKingdom or any kingdom in the Database");
             }
         }
-        debug = myKingdom.name + ' | (' + Object.keys(STATIC.gamePhase)[myKingdom.gamePhase] + ')';
     }
 };

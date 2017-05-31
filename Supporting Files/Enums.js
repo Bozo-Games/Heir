@@ -7,7 +7,8 @@ var STATIC = {
         resourceCommitment: 4,
         questSimulation: 5,
         questResolution: 6,
-        HeirInherits: 7
+        heirInherits: 7,
+        scoreingTheGame: 8
     },
     questArchetype : {
         underConstruction: -1,

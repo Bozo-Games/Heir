@@ -25,13 +25,11 @@ function LogInView() {
     this.startGameBtn.mouseReleased(function() {
             if (myKingdom) {
                 if(myKingdom.hostID == userLocalID) {
-
+                    debug = 'we are currently building';
                 } else if(!myKingdom.hostID) {
                     myKingdom.hostID = userLocalID;
                     processLaws(myKingdom.gamePhase,STATIC.gamePhase.initialKingSelect);
                 }
-                myKingdom.gamePhase = STATIC.gamePhase.initialKingSelect;
-                db.updateKingdom(myKingdom);
             }
         }
     );
@@ -62,7 +60,7 @@ LogInView.prototype.updateButtons = function() {
                 //btn.touchEnded(onClick);
                 this.div.child(btn);
             }
-            if(faction.playerCookieID == userLocalID) {
+            if(faction.playerID == userLocalID) {
                 if(btn.class().indexOf("logInSelectedFactionBtn") == -1) {
                     btn.addClass("logInSelectedFactionBtn");
                 }
@@ -73,11 +71,11 @@ LogInView.prototype.updateButtons = function() {
                  if(btn.class().indexOf("logInSelectedFactionBtn") != -1) {
                      btn.removeClass("logInSelectedFactionBtn");
                  }
-                if(faction.playerCookieID && btn.class().indexOf("alreadySelectedFaction") == -1) {
+                if(faction.playerID && btn.class().indexOf("alreadySelectedFaction") == -1) {
                     print('add');
                     btn.addClass('alreadySelectedFaction');
                 }
-                if (faction.playerCookieID == null && btn.class().indexOf("alreadySelectedFaction") != -1) {
+                if (faction.playerID == null && btn.class().indexOf("alreadySelectedFaction") != -1) {
                     print('remove');
                     btn.removeClass('alreadySelectedFaction');
                 }
@@ -115,23 +113,20 @@ LogInView.prototype.onSelectFaction = function(button) {
             var othersSelection = button.class().indexOf("alreadySelectedFaction") != -1;
             var isMySelection = button.class().indexOf("logInSelectedFactionBtn") != -1;
             if (!isMySelection && !othersSelection) {
-                faction.playerCookieID = userLocalID;
+                faction.playerID = userLocalID;
                 if (myFaction) {
                     if (myFaction.udid != faction.udid) {
-                        myFaction.playerCookieID = null;
-                        print('update fation A');
+                        myFaction.playerID = null;
                         db.updateFaction(myFaction);
                     }
                 }
                 myFaction = faction;
-                print('update fation B');
                 db.updateFaction(myFaction);
             } else if (othersSelection) {
                 print('WARNING: trying to select already selected faction');
             } else if (isMySelection) {
                 if (faction.udid == myFaction.udid) {
-                    myFaction.playerCookieID = null;
-                    print('update fation C');
+                    myFaction.playerID = null;
                     db.updateFaction(myFaction);
                     myFaction = null;
                 } else {
@@ -160,8 +155,34 @@ LogInView.prototype.resizeWindow = function() {
     }
 };
 LogInView.prototype.didSelectFaction = function(factionSelected) {
-    if (factionSelected.playerCookieID == null) {
-        factionSelected.playerCookieID = userLocalID;
+    if (factionSelected.playerID == null) {
+        factionSelected.playerID = userLocalID;
         db.updateFaction(factionSelected);
     }
 };
+
+function renderLogInView() {
+  if (logInView) {
+      showLogInTimeOut--;
+  } else {
+      logInView = new LogInView();
+  }
+
+  if (myKingdom) {
+      if (myKingdom.gamePhase != STATIC.gamePhase.newGame && logInView && showLogInTimeOut < 0) {
+          logInView.destroy();
+          logInView = undefined;
+          iAmPlayer = myFaction != null && myFaction != undefined; //only place this should be set
+          iAmTV = !iAmPlayer;
+      }
+      if (iAmPlayer) {
+        if(iAmHost) {
+            
+        } else {
+
+        }
+      } else if (iAmTV) {
+
+      }
+  }
+}

@@ -15,6 +15,7 @@ var assets = {
 };
 var debug = "Debug 4"; //used as global in console to handle bugs
 var debugDiv;
+
 var logInView;
 function preload() {
     var loaclVerssion =  localStorage.getItem("version");

@@ -229,7 +229,19 @@ var db = {
                     f.loadJSON(factions[key]);
                 }
                 f.udid = key;
-                updatedfactions[key] = f;
+                if(myKingdom) {
+                    if(myKingdom.gamePhase != STATIC.gamePhase.newGame) {
+                        if(f.playerID) {
+                            updatedfactions[key] = f;
+                        } else {
+
+                        }
+                    } else {
+                        updatedfactions[key] = f;
+                    }
+                } else {
+                    updatedfactions[key] = f;
+                }
             }
             db.factions = updatedfactions;
             //now update listeners

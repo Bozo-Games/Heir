@@ -1,5 +1,7 @@
 var allLaws = [];
-
+var randomStartAnimationSettings = {
+	speed:150 // low is faster
+};
 var randomStart = new Law({name:'random start law', isActive:true});
 randomStart.shouldProcessEffect = function () {
     if(myKingdom) {

@@ -20,7 +20,7 @@ var STATIC = {
     resourceType: {
         manpower: 0,
         food: 1,
-        money: 2
+        coin: 2
     },
     factionLoyalties: {
         none: 0,

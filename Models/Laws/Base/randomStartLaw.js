@@ -52,27 +52,27 @@ function renderTVinitialKingSelectRandomStart() {
 			//TVinitalKingSelectViewSettings.loop = randomStartAnimationSettings.minLoopCount;
 		} else {
 			TVinitalKingSelectViewSettings.loop--;
-			var cx = windowWidth / 2;
-			var cy = windowHeight / 2;
-			var angleDeleta = ( (2*Math.PI)) / db.factions.length;
-			var radious = (windowWidth - cx) * 0.75;
-			var factionAngle = 0;
-			var crownAngle =  (2*Math.PI) * ((TVinitalKingSelectViewSettings.loop%randomStartAnimationSettings.speed) / randomStartAnimationSettings.speed);
-			for(var f in db.factions) {
-				var faction = db.factions[f];
-				if(faction.playerID) {
-					var pos = locationOnCircle(cx, cy, radious, factionAngle);
-
-					var a = Math.abs(Math.abs(crownAngle - factionAngle) - Math.PI);
-					var factionsScale = 1 + (a / Math.PI );
-					faction.draw(pos.x, pos.y, factionsScale);
-					factionAngle += angleDeleta;
-				}
-			}
-			radious = (windowWidth - cx) * 0.6;
-			var pos = locationOnCircle(cx,cy,radious,crownAngle);
-			imageMode(CENTER);
-			image(assets.icon.king,pos.x,pos.y,50,50);
 		}
+		var cx = windowWidth / 2;
+		var cy = windowHeight / 2;
+		var angleDeleta = ( (2*Math.PI)) / db.factions.length;
+		var radious = (windowWidth - cx) * 0.75;
+		var factionAngle = 0;
+		var crownAngle =  (2*Math.PI) * ((TVinitalKingSelectViewSettings.loop%randomStartAnimationSettings.speed) / randomStartAnimationSettings.speed);
+		for(var f in db.factions) {
+			var faction = db.factions[f];
+			if(faction.playerID) {
+				var pos = locationOnCircle(cx, cy, radious, factionAngle);
+
+				var a = Math.abs(Math.abs(crownAngle - factionAngle) - Math.PI);
+				var factionsScale = 1 + (a / Math.PI );
+				faction.draw(pos.x, pos.y, factionsScale);
+				factionAngle += angleDeleta;
+			}
+		}
+		radious = (windowWidth - cx) * 0.6;
+		var pos = locationOnCircle(cx,cy,radious,crownAngle);
+		imageMode(CENTER);
+		image(assets.icon.king,pos.x,pos.y,50,50);
 	}
 }

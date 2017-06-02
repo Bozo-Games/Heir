@@ -35,6 +35,9 @@ Character.prototype.buildJSON = function (){
         prestige: this.prestige
     };
 };
+var characterDrawSettings = {
+	defaultScale: 100
+};
 Character.prototype.draw = function(x,y) {
     push();
     fill(color(255,255,255));

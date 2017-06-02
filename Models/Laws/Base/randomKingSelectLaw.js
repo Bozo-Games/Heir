@@ -9,7 +9,7 @@ randomKingSelectLaw.shouldProcessEffect = function () {
 		}
 	}
 };
-randomKingSelectLaw.effect = function () {
+randomKingSelectLaw.processEffect = function () {
 	var toBeRemoved = {};
 	for(var f in db.factions) {
 		var faction = db.factions[f];

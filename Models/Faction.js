@@ -12,13 +12,6 @@ function Faction(json) {
 	this.food = 0;
 	this.coin = 0;
 	this.manpower = 0;
-
-	var resouceKeys = allResourceTypes();
-	this.resourses = {};
-	for (var i = 0; i < resouceKeys.length; i++ ) {
-		var key = resouceKeys[i];
-		this.resourses[key] = 0+10*i+10;
-	}
 	this.loadJSON(json);
 }
 Faction.prototype.loadJSON  = function (json) {
@@ -38,6 +31,10 @@ Faction.prototype.loadJSON  = function (json) {
 		if(json.championID) {
 			this.champion = db.characters[json.championID];
 		}
+		this.prestige =  (json.prestige == undefined) ? 0 : json.prestige;
+		this.manpower =  (json.manpower == undefined) ? 0 : json.manpower;
+		this.food =  (json.food == undefined) ? 0 : json.food;
+		this.coin =  (json.coin == undefined) ? 0 : json.coin;
 	}
 };
 Faction.prototype.buildJSON = function (){
@@ -49,7 +46,10 @@ Faction.prototype.buildJSON = function (){
 		leaderID:(this.leader == undefined) ? null : this.leader.udid,
 		heirID:(this.heir == undefined) ? null : this.heir.udid,
 		championID:(this.champion == undefined) ? null : this.champion.udid
-
+		food:this.food,
+		manpower:this.manpower,
+		coin:this.coin,
+		prestige:this.prestige
 	}
 };
 var factionDrawSettings = {
@@ -104,32 +104,41 @@ Faction.prototype.draw = function(cx,cy,scale) {
 	//draw Resources
 	var rx = x + (s * factionDrawSettings.leaderSize);
 	var ry = y+2;
-	var ryd =(s * factionDrawSettings.heirSize) / 4;//0 - prestige, 1 - manpower, 2 - food, 3 - coin
-	var scaleUpIcon = 1.0;
+	var ryd =(s * factionDrawSettings.heirSize) / 3;//0 - prestige, 1 - manpower, 2 - food, 3 - coin
+	var scaleUpIcon = 1;
 	var offset = -2;
-	textSize(ryd);
+	textSize(ryd * 0.8);
 	fill(this.colors.secondary);
 	strokeWeight(0);
-	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd*4);
+	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd*3);
 	fill(this.colors.highlight);
 	imageMode(CORNERS);
-	//draw presige
-	image(assets.resource.prestige,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
-	text(this.prestige,rx+ryd,ry);
-	ry += ryd;
 	//manpower
+	fill(this.colors.highlight);
 	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd);
 	image(assets.resource.manpower,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
-	text(this.manpower,rx+ryd,ry);
+	fill(this.colors.contrast);
+	text(this.manpower,rx+ryd,ry,rx+scaleUpIcon*ryd - ryd,ry+scaleUpIcon*ryd - ryd);
 	ry += ryd;
 	//food
 	image(assets.resource.food,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
-	text(this.food,rx+ryd,ry);
+	fill(this.colors.contrast);
+	text(this.food,rx+ryd,ry,rx+scaleUpIcon*ryd - ryd,ry+scaleUpIcon*ryd - ryd);
 	ry += ryd;
 	//coin
+	fill(this.colors.highlight);
 	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd);
 	image(assets.resource.coin,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
-	text(this.coin,rx+ryd,ry);
+	fill(this.colors.contrast);
+	text(this.coin,rx+ryd,ry,rx+scaleUpIcon*ryd - ryd,ry+scaleUpIcon*ryd - ryd);
 
+	//draw presige
+	fill(this.colors.secondary);
+	ry = y + s - ryd;
+	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd);
+	image(assets.resource.prestige,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
+	fill(this.colors.contrast);
+	text(this.prestige,rx+ryd,ry,rx+scaleUpIcon*ryd - ryd,ry+scaleUpIcon*ryd - ryd);
+	ry += ryd;
 	pop();
 };

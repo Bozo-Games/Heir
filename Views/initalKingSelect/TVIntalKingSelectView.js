@@ -6,7 +6,7 @@ var TVinitalKingSelectViewSettings = {
 function renderTVinitialKingSelect(){
   switch (TVinitalKingSelectViewSettings.animationCase) {
     case STATIC.initialKingSelectLaws.randomKingSelect: //random start law
-      renderTVinitialKingSelectrandomKingSelect(); //defined by laws
+      renderTVinitialKingSelectRandomKingSelect(); //defined by laws
       break;
     default:
 

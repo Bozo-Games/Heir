@@ -3,7 +3,7 @@ function Faction(json) {
     this.name = json.name;
 
     this.playerID = null;
-    this.color = '#FF0000';
+    this.colors = COLOR.factions.default;
     this.leader = null;
     this.heir = null;
     this.champion = null;
@@ -24,7 +24,7 @@ Faction.prototype.loadJSON  = function (json) {
         this.name = json.name;
         this.colorIndex = json.colorIndex;
         this.playerID =  (json.playerID == undefined) ? null : json.playerID;
-        this.color =  (json.color == undefined) ? '#888888' : json.color;
+        this.colors =  (json.colors == undefined) ? COLOR.factions.default : json.colors;
 
         if(json.leaderID) {
             this.leader = db.characters[json.leaderID];
@@ -42,7 +42,7 @@ Faction.prototype.buildJSON = function (){
         id:this.udid,
         name:this.name,
         playerID:this.playerID,
-        color:this.color,
+        colors:this.colors,
         leaderID:(this.leader == undefined) ? null : this.leader.udid,
         heirID:(this.heir == undefined) ? null : this.heir.udid,
         championID:(this.champion == undefined) ? null : this.champion.udid
@@ -58,7 +58,7 @@ var factionDrawSettings = {
 };
 Faction.prototype.draw = function(cx,cy,scale) {
   push();
-  fill(this.color);
+  fill(this.colors.main);
   stroke(COLOR.faction.borderColor);
   strokeWeight(2);
 	var s =  scale*factionDrawSettings.defaultScale;

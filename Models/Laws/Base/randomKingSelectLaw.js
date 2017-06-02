@@ -11,6 +11,7 @@ randomKingSelectLaw.shouldProcessEffect = function () {
 };
 randomKingSelectLaw.processEffect = function () {
 	var toBeRemoved = {};
+	print('called');
 	for(var f in db.factions) {
 		var faction = db.factions[f];
 		if (faction.playerID) {

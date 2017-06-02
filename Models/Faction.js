@@ -45,7 +45,7 @@ Faction.prototype.buildJSON = function (){
 		colors:this.colors,
 		leaderID:(this.leader == undefined) ? null : this.leader.udid,
 		heirID:(this.heir == undefined) ? null : this.heir.udid,
-		championID:(this.champion == undefined) ? null : this.champion.udid
+		championID:(this.champion == undefined) ? null : this.champion.udid,
 		food:this.food,
 		manpower:this.manpower,
 		coin:this.coin,

@@ -42,15 +42,15 @@ allLaws.push(randomStart);
 //-------------------------------------------------------------------------------------------- TV Animations
 var randomStartAnimationSettings = {
 	speed:150, // low is faster
-	minLoopCount: 600, //high the longer it loops for,
+	minLoopCount: 150, //high the longer it loops for,
 	stop: undefined,
 };
 function renderTVinitialKingSelectRandomStart() {
 	if(TVinitalKingSelectViewSettings.loop == undefined) { //implies new animation started
-		var pc = random(0,db.factions.activePlayersCount);
+		var pc = db.activePlayerCount;
 		var angleDeleta = ( (2*Math.PI)) / pc;
-		TVinitalKingSelectViewSettings.loop = randomStartAnimationSettings.minLoopCount + random(0,pc) * angleDeleta;
-		TVinitalKingSelectViewSettings.stop =  random(0,pc) * angleDeleta
+		TVinitalKingSelectViewSettings.loop = randomStartAnimationSettings.minLoopCount + getRandomInt(0,pc) * angleDeleta;
+		TVinitalKingSelectViewSettings.stop =  getRandomInt(0,pc) * angleDeleta
 	} else {
 		if(TVinitalKingSelectViewSettings.loop <= 0) {
 			//TVinitalKingSelectViewSettings.loop = randomStartAnimationSettings.minLoopCount;
@@ -59,7 +59,7 @@ function renderTVinitialKingSelectRandomStart() {
 		}
 		var cx = windowWidth / 2;
 		var cy = windowHeight / 2;
-		var angleDeleta = ( (2*Math.PI)) / db.factions.activePlayerCount;
+		var angleDeleta = ( (2*Math.PI)) / db.activePlayerCount ;
 		var radious = (windowWidth - cx) * 0.75;
 		var factionAngle = 0;
 		var crownAngle =  (2*Math.PI) * ((TVinitalKingSelectViewSettings.loop%randomStartAnimationSettings.speed) / randomStartAnimationSettings.speed);

@@ -236,7 +236,7 @@ var db = {
 				updatedfactions[key] = f;
 			}
 			db.factions = updatedfactions;
-			db.factions.activePlayerCount = activePlayers;
+			db.activePlayerCount = activePlayers;
 			//now update listeners
 			for (var i = db.notifications.factions.length - 1; i >= 0; i--) {
 				var callbackObject = db.notifications.factions[i];

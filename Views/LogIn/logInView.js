@@ -61,8 +61,12 @@ LogInView.prototype.updateButtons = function() {
             }
             if(faction.playerID == userLocalID) {
                 if(btn.class().indexOf("logInSelectedFactionBtn") == -1) {
-                    btn.addClass("logInSelectedFactionBtn");
+	                btn.addClass("logInSelectedFactionBtn");
+	                btn.html(faction.name + "*");
                 }
+	            if(faction.playerID && btn.class().indexOf("alreadySelectedFaction") == -1) {
+		            btn.addClass('alreadySelectedFaction');
+	            }
                 if(myFaction == undefined) {
                     myFaction = faction;
                 }
@@ -71,7 +75,6 @@ LogInView.prototype.updateButtons = function() {
                      btn.removeClass("logInSelectedFactionBtn");
                  }
                 if(faction.playerID && btn.class().indexOf("alreadySelectedFaction") == -1) {
-                    print('add');
                     btn.addClass('alreadySelectedFaction');
                 }
                 if (faction.playerID == null && btn.class().indexOf("alreadySelectedFaction") != -1) {
@@ -92,10 +95,12 @@ LogInView.prototype.updateButtons = function() {
     this.factionSelectBtns = tempBtns;
     var i = 10;
     for(var udid  in this.factionSelectBtns) {
-        var btn = this.factionSelectBtns[udid];
-        btn.style('top',i + '%');
-        btn.style('border-color',db.factions[udid].color);
-        i+=8;
+      var btn = this.factionSelectBtns[udid];
+      btn.style('top',i + '%');
+      btn.style('background-color',db.factions[udid].colors.main);
+	    btn.style('border-color',db.factions[udid].colors.highlight);
+	    btn.style('color',db.factions[udid].colors.contrast);
+      i+=8;
     }
 
     this.isSelecting = false;

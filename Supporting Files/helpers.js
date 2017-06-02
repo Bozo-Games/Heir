@@ -53,6 +53,9 @@ function findRandomCharacterIDNotAsignedToFaction() {
     return posible[Math.floor(Math.random() * posible.length)];
 }
 
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 function locationOnCircle(cx,cy,r,a) {
     var q = 0;
     var theta = a;

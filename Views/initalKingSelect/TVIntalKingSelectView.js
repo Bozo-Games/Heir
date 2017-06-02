@@ -33,7 +33,7 @@ function renderTVinialKingSelectRandomStart() {
             var faction = db.factions[f];
             var pos = locationOnCircle(cx,cy,radious,factionAngle);
 
-            var factionsScale = 1 + (1 - Math.abs(crownAngle - factionAngle)/(Math.PI*2));
+            var factionsScale = 1 + (1 - Math.abs((2*Math.PI +crownAngle) - (2*Math.PI +factionAngle))/(Math.PI*2));
             faction.draw(pos.x,pos.y,factionsScale);
 
             factionAngle += angleDeleta;

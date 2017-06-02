@@ -2,7 +2,6 @@ var allLaws = [];
 function processLaws(fromGP, toGP) {
   for(var l = 0; l < allLaws.length; l++) {
     var law = allLaws[l];
-    print(law);
     if(law.shouldProcessEffect() ) {
       law.proccessEffect();
     }

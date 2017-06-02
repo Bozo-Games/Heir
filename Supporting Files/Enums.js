@@ -29,6 +29,6 @@ var STATIC = {
         champion: 3
     },
 	initialKingSelectLaws: { //this is used for animation switches
-		randomStart:0
+		randomKingSelect:0
 	}
 };

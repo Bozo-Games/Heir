@@ -1,70 +1,73 @@
 function Faction(json) {
-    this.udid = null;
-    this.name = json.name;
+	this.udid = null;
+	this.name = json.name;
 
-    this.playerID = null;
-    this.colors = COLOR.factions.default;
-    this.leader = null;
-    this.heir = null;
-    this.champion = null;
+	this.playerID = null;
+	this.colors = COLOR.factions.default;
+	this.leader = null;
+	this.heir = null;
+	this.champion = null;
 
-    this.prestige = 0;
+	this.prestige = 0;
+	this.food = 0;
+	this.coin = 0;
+	this.manpower = 0;
 
-    var resouceKeys = allResourceTypes();
-    this.resourses = {};
-    for (var i = 0; i < resouceKeys.length; i++ ) {
-        var key = resouceKeys[i];
-        this.resourses[key] = 0+10*i+10;
-    }
-    this.loadJSON(json);
+	var resouceKeys = allResourceTypes();
+	this.resourses = {};
+	for (var i = 0; i < resouceKeys.length; i++ ) {
+		var key = resouceKeys[i];
+		this.resourses[key] = 0+10*i+10;
+	}
+	this.loadJSON(json);
 }
 Faction.prototype.loadJSON  = function (json) {
-    if(json != undefined) {
-        this.udid = (json.id == undefined) ? null : json.id;
-        this.name = json.name;
-        this.colorIndex = json.colorIndex;
-        this.playerID =  (json.playerID == undefined) ? null : json.playerID;
-        this.colors =  (json.colors == undefined) ? COLOR.factions.default : json.colors;
+	if(json != undefined) {
+		this.udid = (json.id == undefined) ? null : json.id;
+		this.name = json.name;
+		this.colorIndex = json.colorIndex;
+		this.playerID =  (json.playerID == undefined) ? null : json.playerID;
+		this.colors =  (json.colors == undefined) ? COLOR.factions.default : json.colors;
 
-        if(json.leaderID) {
-            this.leader = db.characters[json.leaderID];
-        }
-        if(json.heirID) {
-            this.heir = db.characters[json.heirID];
-        }
-        if(json.championID) {
-            this.champion = db.characters[json.championID];
-        }
-    }
+		if(json.leaderID) {
+			this.leader = db.characters[json.leaderID];
+		}
+		if(json.heirID) {
+			this.heir = db.characters[json.heirID];
+		}
+		if(json.championID) {
+			this.champion = db.characters[json.championID];
+		}
+	}
 };
 Faction.prototype.buildJSON = function (){
-    return {
-        id:this.udid,
-        name:this.name,
-        playerID:this.playerID,
-        colors:this.colors,
-        leaderID:(this.leader == undefined) ? null : this.leader.udid,
-        heirID:(this.heir == undefined) ? null : this.heir.udid,
-        championID:(this.champion == undefined) ? null : this.champion.udid
+	return {
+		id:this.udid,
+		name:this.name,
+		playerID:this.playerID,
+		colors:this.colors,
+		leaderID:(this.leader == undefined) ? null : this.leader.udid,
+		heirID:(this.heir == undefined) ? null : this.heir.udid,
+		championID:(this.champion == undefined) ? null : this.champion.udid
 
-    }
+	}
 };
 var factionDrawSettings = {
-	defaultScale: 100,
+	defaultScale: 150,
 	cornerRadius:5,
 	leaderSize: 0.6, //is a % of the size
 	heirSize: 0.4, //should be 1-leaderSize but this is here for readability
 	championSize: 0.3 //again for readablity
 };
 Faction.prototype.draw = function(cx,cy,scale) {
-  push();
-  fill(this.colors.main);
-  stroke(COLOR.faction.borderColor);
-  strokeWeight(2);
+	push();
+	fill(this.colors.main);
+	stroke(COLOR.faction.borderColor);
+	strokeWeight(2);
 	var s =  scale*factionDrawSettings.defaultScale;
 	var x = cx - s / 2;
 	var y =  cy - s / 2;
-  rect(x ,y,s,s,factionDrawSettings.cornerRadius);
+	rect(x ,y,s,s,factionDrawSettings.cornerRadius);
 	//draw leader
 	var lcx = x + (s * factionDrawSettings.leaderSize / 2);
 	var lcy = y + (s * factionDrawSettings.leaderSize / 2);
@@ -100,20 +103,33 @@ Faction.prototype.draw = function(cx,cy,scale) {
 	}
 	//draw Resources
 	var rx = x + (s * factionDrawSettings.leaderSize);
-	var ry = y;
+	var ry = y+2;
 	var ryd =(s * factionDrawSettings.heirSize) / 4;//0 - prestige, 1 - manpower, 2 - food, 3 - coin
+	var scaleUpIcon = 1.0;
+	var offset = -2;
+	textSize(ryd);
+	fill(this.colors.secondary);
+	strokeWeight(0);
+	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd*4);
+	fill(this.colors.highlight);
 	imageMode(CORNERS);
 	//draw presige
-	image(assets.resource.prestige,rx,ry,rx+ryd,ry+ryd);
+	image(assets.resource.prestige,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
+	text(this.prestige,rx+ryd,ry);
 	ry += ryd;
 	//manpower
-	image(assets.resource.manpower,rx,ry,rx+ryd,ry+ryd);
+	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd);
+	image(assets.resource.manpower,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
+	text(this.manpower,rx+ryd,ry);
 	ry += ryd;
 	//food
-	image(assets.resource.food,rx,ry,rx+ryd,ry+ryd);
+	image(assets.resource.food,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
+	text(this.food,rx+ryd,ry);
 	ry += ryd;
 	//coin
-	image(assets.resource.coin,rx,ry,rx+ryd,ry+ryd);
+	rect(rx,ry,(s - (s*factionDrawSettings.leaderSize)) + offset,ryd);
+	image(assets.resource.coin,rx,ry,rx+scaleUpIcon*ryd,ry+scaleUpIcon*ryd);
+	text(this.coin,rx+ryd,ry);
 
-  pop();
+	pop();
 };

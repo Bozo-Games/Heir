@@ -1,15 +1,14 @@
 var TVinitalKingSelectViewSettings = {
   flavorText:"defualt flavor text for king selection.",
-  animationCase: 0, //implies default
+  animationCase: STATIC.initialKingSelectLaws.randomStart,
   loop: undefined
 };
-function renderTVinialKingSelect(){
+function renderTVinitialKingSelect(){
   switch (TVinitalKingSelectViewSettings.animationCase) {
-    case 0: //random start law
-      renderTVinialKingSelectRandomStart();
+    case STATIC.initialKingSelectLaws.randomStart: //random start law
+      renderTVinitialKingSelectRandomStart(); //defined by laws
       break;
     default:
 
   }
-
 }

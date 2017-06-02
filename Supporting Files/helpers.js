@@ -61,7 +61,7 @@ function locationOnCircle(cx,cy,r,a) {
     if (a > Math.PI / 2) {
         if(a > Math.PI) {
             if(a > Math.PI * 1.5) {
-                theta = 2*Math.PI - a;
+                theta = (2*Math.PI) - a;
                 px = 1;
                 py = 1;
                 q = 4;

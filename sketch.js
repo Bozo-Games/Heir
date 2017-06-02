@@ -89,7 +89,7 @@ function renderTVView() {
 
         break;
       case STATIC.gamePhase.initialKingSelect:
-        renderTVinialKingSelect();
+        renderTVinitialKingSelect();
         break;
       case STATIC.gamePhase.questBuilding:
 

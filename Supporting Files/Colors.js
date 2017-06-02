@@ -1,3 +1,4 @@
+//not sure if this is best way to originize but might just work fine for fast changes
 COLOR = {
     resources: {
         manpower: '#4E4EC8',
@@ -10,6 +11,8 @@ COLOR = {
         c: '#0000ff',
         d: '#ff00ff',
         e: '#00ffff'
-
-    }
+    },
+	faction: {
+		borderColor: '#ffffff'
+	}
 };

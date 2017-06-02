@@ -49,12 +49,17 @@ Faction.prototype.buildJSON = function (){
 
     }
 };
-Faction.prototype.draw = function(x,y,scale) {
+var factionDrawSettings = {
+	defaultScale: 100,
+	cornerRadius:5
+};
+Faction.prototype.draw = function(cx,cy,scale) {
     push();
-    fill(color(255,255,255));
-    stroke(this.color);
+    fill(this.color);
+    stroke(COLOR.faction.borderColor);
     strokeWeight(2);
-    rect(x,y,100*scale,100*scale,5);
+	var s =  scale*factionDrawSettings.defaultScale;
+    rect( x - s / 2,y - s  /2,s,s,factionDrawSettings.cornerRadius);
     var resouceKeys = allResourceTypes();
     noStroke();
     for (var i = 0; i < resouceKeys.length; i++ ) {

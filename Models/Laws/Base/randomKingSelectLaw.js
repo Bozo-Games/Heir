@@ -28,7 +28,7 @@ randomKingSelectLaw.processEffect = function () {
 				character.factionLoyalty = STATIC.factionLoyalties.heir;
 			}
 		} else { //this faction was not selected so lets remove these
-			toBeRemoved.push(faction);
+			toBeRemoved[f] = faction;
 		}
 	}
 	db.batchUpdateFactions();

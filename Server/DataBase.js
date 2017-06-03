@@ -261,7 +261,7 @@ var db = {
 	batchUpdateCharacters: function () {
 		var updates = {};
 		for (var c in db.characters) {
-			var character = db.characters[f];
+			var character = db.characters[c];
 			updates['/' + c] = character.buildJSON();
 		}
 		return db._ref.characters.update(updates);
